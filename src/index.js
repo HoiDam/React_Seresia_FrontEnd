@@ -2,18 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Navbar,DropdownButton,Dropdown,Form} from 'react-bootstrap'
 import createClass from 'create-react-class';
-import {unmountComponentAtNode} from "react-dom";
+import * as reactDom from "react-dom";
 
-
+// import Pagination from './datatable';
 import Select from './Table';
-import Pagination from './datatable';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 var TableSelect = createClass({
   handleSelect: function(value){
-    unmountComponentAtNode(document.getElementById('selectArea'));
+    reactDom.unmountComponentAtNode(document.getElementById('selectArea'));
     // console.log(value);
     // test button
 
@@ -55,8 +54,7 @@ ReactDOM.render(
 )
 
 
-// test pagination
-ReactDOM.render(
-  <Pagination/>,
-  document.getElementById('tableArea')
-);
+// ReactDOM.render(
+//   <Pagination />,
+//   document.getElementById('tableArea')
+// )

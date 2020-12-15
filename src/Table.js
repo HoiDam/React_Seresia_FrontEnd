@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import ReactDOM from "react-dom";
 import {Form,Button,Spinner,Card} from 'react-bootstrap'
+
+import Pagination from './datatable';
 
 const url="http://127.0.0.1:5000/"
 
@@ -72,7 +75,6 @@ class Select extends Component {
       <Card>
         <Card.Body>
         <Card.Title>Current Selecting table : {this.state.value}</Card.Title>
-        
         <Form  onSubmit={this.handleSubmit} >
         <Form.Group>
         {this.l1}
@@ -91,7 +93,6 @@ class Select extends Component {
   }
 
   async getList(table){
-  
     const requestOptions={
       method: "POST",
       headers: {'Content-Type': 'application/json'},
@@ -103,6 +104,7 @@ class Select extends Component {
     // .then(()=>console.log(tempArray))
     
   }
+
   async handleSubmit(event){
     event.preventDefault();
     const requestOptions={
@@ -119,8 +121,17 @@ class Select extends Component {
     console.log(requestOptions["body"])
     await fetch( url+"general_get/general_get", requestOptions)
     .then(res => res.json())
-    .then(data=> console.log(JSON.parse(data["message"])))
+    // .then(data=> console.log(JSON.parse(data["message"])))
+    .then( async data=>{
+      var temp=await JSON.parse(data["message"])
+      ReactDOM.render(
+        <Pagination rdata={temp} />,
+        document.getElementById('tableArea')
+      )
+    }
+      )
   }
+
   valueOnChange(event){
     formData[event.target.id]["value"]=event.target.value
     // console.log(formData)
@@ -128,7 +139,6 @@ class Select extends Component {
   
 
   render(){ 
-
     return (
       <div>
       {this.state.loading?<Spinner animation="grow"/>:this.whole}
@@ -136,7 +146,5 @@ class Select extends Component {
     )
   }
   
-
-
 };
 export default Select;
