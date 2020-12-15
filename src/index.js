@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Navbar,DropdownButton,Dropdown,Form} from 'react-bootstrap'
 import createClass from 'create-react-class';
-import { unmountComponentAtNode} from "react-dom";
+import {unmountComponentAtNode} from "react-dom";
 
 
 import Select from './Table';
@@ -55,13 +55,8 @@ ReactDOM.render(
 )
 
 
-
 // test pagination
 ReactDOM.render(
   <Pagination/>,
   document.getElementById('tableArea')
 );
-
-
-
-// to do : try to create boxes by table

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Form,Button,Spinner} from 'react-bootstrap'
+import {Form,Button,Spinner,Card} from 'react-bootstrap'
 
 const url="http://127.0.0.1:5000/"
 
@@ -17,23 +17,8 @@ const mapping={"dt_data_type":["table_name","field_type"],
 "dt_market":["country_code"],
 }
 const directInput=["equity_code","index_code"]
-var tempArray
+
 var formData=[]
-async function getList(table){
-  
-  const requestOptions={
-    method: "POST",
-    headers: {'Content-Type': 'application/json'},
-    body:JSON.stringify({"table":table})
-  };
-  await fetch(url+"ava_get/ava_get", requestOptions)
-  .then(res => res.json())
-  .then(data=>tempArray= JSON.parse(data["message"]))
-  // .then(()=>console.log(tempArray))
-  
-}
-
-
 
 class Select extends Component {
   constructor(props) {
@@ -42,11 +27,12 @@ class Select extends Component {
       value:props.nvalue,
       result:{},  //return value
       loading:false,
+      tempArray:[]
     }
     this.handleSubmit=this.handleSubmit.bind(this);
     this.valueOnChange=this.valueOnChange.bind(this);
   }
-  async componentWillMount(){
+  async componentDidMount(){
     this.setState({value:this.props.nvalue,result:{},loading:true,formData:[]})
     var loop1=[],loop2=[],ddid=0 //reset
     formData=[] //reset
@@ -64,10 +50,10 @@ class Select extends Component {
           )
       }
       else{
-        await getList(this.state.value)
+        await this.getList(this.state.value)
         var selectList=[<option></option>]
-        for (const item in await tempArray[column]){
-          selectList.push(<option>{tempArray[column][item]}</option>)
+        for (const item in await this.state.tempArray[column]){
+          selectList.push(<option>{this.state.tempArray[column][item]}</option>)
         }
         loop2.push(
           <React.Fragment>
@@ -82,25 +68,62 @@ class Select extends Component {
     }
     this.l1=loop1
     this.l2=loop2
+    this.whole=(
+      <Card>
+        <Card.Body>
+        <Card.Title>Current Selecting table : {this.state.value}</Card.Title>
+        
+        <Form  onSubmit={this.handleSubmit} >
+        <Form.Group>
+        {this.l1}
+        {this.l2}
+        </Form.Group>
+        <Button  variant="primary" class="mt-2" type="submit">Search</Button>
+        </Form>
+        </Card.Body>
+      </Card>
+      )
+
     this.setState({loading:false})
+  }
+  componentWillUnmount(){
+    console.log('Regenerate')
+  }
+
+  async getList(table){
+  
+    const requestOptions={
+      method: "POST",
+      headers: {'Content-Type': 'application/json'},
+      body:JSON.stringify({"table":table})
+    };
+    await fetch(url+"ava_get/ava_get", requestOptions)
+    .then(res => res.json())
+    .then(data=>this.state.tempArray= JSON.parse(data["message"]))
+    // .then(()=>console.log(tempArray))
+    
   }
   async handleSubmit(event){
     event.preventDefault();
     const requestOptions={
       method: "POST",
       headers: {'Content-Type': 'application/json'},
-      body:JSON.stringify({"table":this.state.value})
+      body:{"table":this.state.value}
     };
-    return fetch( "http://127.0.0.1:5000/general_get/general_get", requestOptions)
+    for (const id in formData){
+      if (formData[id]["value"]!==""){
+        requestOptions["body"][formData[id]["name"]]=formData[id]["value"]
+      }
+    }
+    requestOptions["body"]=JSON.stringify(requestOptions["body"])
+    console.log(requestOptions["body"])
+    await fetch( url+"general_get/general_get", requestOptions)
     .then(res => res.json())
-    .then(data=>this.setState({formData:String(data["message"])}))
-    
+    .then(data=> console.log(JSON.parse(data["message"])))
   }
   valueOnChange(event){
-    // this.setState({formData[event.target.id]:event.target.value;})
-    // console.log(this.state.formData,event.target.value,event.target.id)
     formData[event.target.id]["value"]=event.target.value
-
+    // console.log(formData)
   }
   
 
@@ -108,13 +131,7 @@ class Select extends Component {
 
     return (
       <div>
-      <Form  onSubmit={this.handleSubmit} >
-      <Form.Group>
-      {this.l1}
-      {this.state.loading?<Spinner animation="grow"/>:this.l2}
-      </Form.Group>
-      <Button  variant="primary" class="mt-2" type="submit">Search</Button>
-      </Form>
+      {this.state.loading?<Spinner animation="grow"/>:this.whole}
       </div>
     )
   }
