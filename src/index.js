@@ -7,7 +7,7 @@ import * as reactDom from "react-dom";
 // import Pagination from './datatable';
 import Select from './Table';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 
 var TableSelect = createClass({
@@ -23,9 +23,8 @@ var TableSelect = createClass({
   render: function(){
      return(
         <Navbar bg="light" expand="lg" className="bg-light justify-content-between">
-        <Navbar.Brand> 🗠 Seresia Datatable UI</Navbar.Brand>
-        <Form.Text className="text-muted">created with reactJS</Form.Text>
-        <DropdownButton fill title="Choose Table" id="bg-nested-dropdown" onSelect={this.handleSelect} value={this.eventKey}>
+        <Navbar.Brand style={{ color: "#9933CC"}}> 🗠 Seresia Datatable UI</Navbar.Brand>
+        <DropdownButton title="Choose Table" id="bg-nested-dropdown" onSelect={this.handleSelect} value={this.eventKey}>
         <Dropdown.Item eventKey="dt_data_type">Data Type</Dropdown.Item>
         <Dropdown.Item eventKey="dt_market">Market</Dropdown.Item>
         <Dropdown.Item eventKey="dt_history">History</Dropdown.Item>
@@ -40,6 +39,7 @@ var TableSelect = createClass({
         <Dropdown.Item eventKey="dt_index_de">Index Detail</Dropdown.Item>
         <Dropdown.Item eventKey="dt_index_member">Index Member</Dropdown.Item>
         </DropdownButton>
+        <Form.Text className="text-muted">created with reactJS⚛️</Form.Text>
         </Navbar>
         
      );

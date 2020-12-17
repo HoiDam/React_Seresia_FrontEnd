@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import ReactDOM from "react-dom";
 import * as reactDom from "react-dom";
 import {Form,Button,Spinner,Card,Row} from 'react-bootstrap';
-// import * as moment from 'moment';
 
 import TextField from '@material-ui/core/TextField';
 
@@ -55,7 +54,6 @@ class Select extends Component {
     this.handleSubmit=this.handleSubmit.bind(this);
     this.valueOnChange=this.valueOnChange.bind(this);
     this.dateOnChange=this.dateOnChange.bind(this);
-    // this.toggleBlocking = this.toggleBlocking.bind(this); //block the fucking way
   }
  
   async componentDidMount(){
@@ -111,13 +109,17 @@ class Select extends Component {
     this.whole=(
       <Card border>
         <Card.Body>
-        <Card.Title>Current Selecting table : {this.state.value}</Card.Title>
+        <Card.Title >
+          <Form.Text style={{ color: "#1C2331"}}>Current Selecting table : </Form.Text>
+          <Form.Text style={{ color: "#0099CC"}} >{this.state.value}</Form.Text>
+        </Card.Title>
         <Form onSubmit={this.handleSubmit} >
         <Form.Group>
         {this.l1}
         {this.l2}
         {this.l3}
         </Form.Group>
+        <Form.Text className="text-muted">Leave empty to not use that criteria on searching</Form.Text>
         <Row className="mt-2">
         <Button  variant="primary" type="submit">Search</Button>
         </Row>
@@ -131,10 +133,6 @@ class Select extends Component {
   componentWillUnmount(){
     console.log('Regenerate')
   }
-
-  // toggleBlocking() {
-  //   this.setState({blocking: !this.state.blocking});
-  // }
 
   async getList(table){
     const requestOptions={
