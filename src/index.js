@@ -39,7 +39,7 @@ var TableSelect = createClass({
         <Dropdown.Item eventKey="dt_index_de">Index Detail</Dropdown.Item>
         <Dropdown.Item eventKey="dt_index_member">Index Member</Dropdown.Item>
         </DropdownButton>
-        <Form.Text className="text-muted">created with reactJS⚛️</Form.Text>
+        <Form.Text className="text-muted">v1.0 created with reactJS⚛️</Form.Text>
         </Navbar>
         
      );
