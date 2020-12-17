@@ -22,10 +22,10 @@ var TableSelect = createClass({
 
   render: function(){
      return(
-        <Navbar bg="light" expand="lg">
-        <Navbar.Brand > 🗠 Seresia Datatable UI</Navbar.Brand>
+        <Navbar bg="light" expand="lg" className="bg-light justify-content-between">
+        <Navbar.Brand> 🗠 Seresia Datatable UI</Navbar.Brand>
         <Form.Text className="text-muted">created with reactJS</Form.Text>
-        <DropdownButton title="Choose Table" id="bg-nested-dropdown" onSelect={this.handleSelect} value={this.eventKey}>
+        <DropdownButton fill title="Choose Table" id="bg-nested-dropdown" onSelect={this.handleSelect} value={this.eventKey}>
         <Dropdown.Item eventKey="dt_data_type">Data Type</Dropdown.Item>
         <Dropdown.Item eventKey="dt_market">Market</Dropdown.Item>
         <Dropdown.Item eventKey="dt_history">History</Dropdown.Item>
@@ -41,6 +41,7 @@ var TableSelect = createClass({
         <Dropdown.Item eventKey="dt_index_member">Index Member</Dropdown.Item>
         </DropdownButton>
         </Navbar>
+        
      );
   }
 });

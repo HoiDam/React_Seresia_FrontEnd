@@ -21,7 +21,8 @@
     "react-moment": "^1.0.0",
     "react-scripts": "4.0.1",
     "register-service-worker": "^1.7.1",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "xlsx": "^0.16.9"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from "react-dom";
 import * as reactDom from "react-dom";
-import {Form,Button,Spinner,Card} from 'react-bootstrap';
+import {Form,Button,Spinner,Card,Row} from 'react-bootstrap';
 // import * as moment from 'moment';
 
 import TextField from '@material-ui/core/TextField';
@@ -118,7 +118,9 @@ class Select extends Component {
         {this.l2}
         {this.l3}
         </Form.Group>
-        <Button  variant="primary" class="mt-2" type="submit">Search</Button>
+        <Row className="mt-2">
+        <Button  variant="primary" type="submit">Search</Button>
+        </Row>
         </Form>
         </Card.Body>
       </Card>
@@ -164,16 +166,14 @@ class Select extends Component {
       }
     }
     requestOptions["body"]=JSON.stringify(requestOptions["body"])
-    console.log(requestOptions["body"])
     await fetch( url+"general_get/general_get", requestOptions)
     .then(res => res.json())
     // .then(data=> console.log(JSON.parse(data["message"])))
     .then( async data=>{
       var temp=await JSON.parse(data["message"])
       reactDom.unmountComponentAtNode(document.getElementById('tableArea'));
-      console.log("bot")
       ReactDOM.render(
-        <Pagination rdata={temp} />,
+        <Pagination rdata={temp} tablename={this.state.value}/>,
         document.getElementById('tableArea')
       )
     }
