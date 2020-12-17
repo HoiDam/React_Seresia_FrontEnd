@@ -1,6 +1,15 @@
 import React from 'react';
 import { MDBDataTableV5 } from 'mdbreact';
 import {Card} from 'react-bootstrap'
+import {CSVLink, CSVDownload} from 'react-csv';
+
+const csvData =[
+  ['firstname', 'lastname', 'email'] ,
+  ['John', 'Doe' , 'john.doe@xyz.com'] ,
+  ['Jane', 'Doe' , 'jane.doe@xyz.com']
+];
+
+
 
 export default function Pagination(props) {
   // console.log(props.rdata)
@@ -19,18 +28,24 @@ export default function Pagination(props) {
     rows: data
   });
 
-  return <Card>
+  return <Card border>
   <Card.Body>
+    <Card.Title>Fetched Result : </Card.Title>
     <MDBDataTableV5 
-    hover entriesOptions={[5, 20, 25]} 
-    entries={5}  
-    data={datatable} 
-    scrollX 
-    scrollY
+    entries={5}
+    responsive
+    hover 
     striped
-    bordered
-    pagingTop/>
+    pagingTop
+    data={datatable} />
+
+    <CSVLink data={csvData} 
+    filename={"my-file.csv"}
+    className="btn btn-primary"
+    target="_blank">Download me
+    </CSVLink>
+    
   </Card.Body>
   </Card>;
 }
-// to do : beautify + start date end date
+// TO DO : csv+excel + tut +upload

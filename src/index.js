@@ -13,9 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 var TableSelect = createClass({
   handleSelect: function(value){
     reactDom.unmountComponentAtNode(document.getElementById('selectArea'));
-    // console.log(value);
-    // test button
-
+    
     ReactDOM.render(
     <Select nvalue={value} />,
     document.getElementById('selectArea')
@@ -53,8 +51,3 @@ ReactDOM.render(
   document.getElementById('topArea')
 )
 
-
-// ReactDOM.render(
-//   <Pagination />,
-//   document.getElementById('tableArea')
-// )
