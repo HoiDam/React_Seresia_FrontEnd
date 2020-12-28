@@ -8,7 +8,8 @@ import TextField from '@material-ui/core/TextField';
 
 import Pagination from './datatable'; //datatable
 
-const url="http://127.0.0.1:5000/"
+// const url="http://127.0.0.1:5000/"
+const url="https://xry7h6r9m2.execute-api.us-east-1.amazonaws.com/"
 
 //equity code kick
 const mapping={"dt_data_type":["table_name","field_type"],
@@ -83,6 +84,7 @@ class Select extends Component {
               onChange={this.dateOnChange}
               fullWidth={true}
               margin="dense"
+              required
             />
             </React.Fragment>
           )

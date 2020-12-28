@@ -1,12 +1,16 @@
 import React from 'react';
-import { MDBDataTableV5 } from 'mdbreact';
+import { MDBDataTableV5} from 'mdbreact';
 import {Card,Button,Tab,Tabs,Row} from 'react-bootstrap'
 import {CSVLink} from 'react-csv';
 
 import ReactExport from "react-data-export"; //excel
+import ModalPage from './modalPage'; //modal
+
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+const stringMax=20;
+
 
 class ExcelDl extends React.Component{
   constructor(props) {
@@ -41,7 +45,9 @@ export default function Pagination(props) {
   // console.log(props.rdata)
   const data=props.rdata
   const name=props.tablename
+  var genData=[]
   var col=[]
+  var obj=[]
   // console.log(data)
   for (const [key] of Object.entries(data[0])){
     var temp={}
@@ -49,10 +55,30 @@ export default function Pagination(props) {
     temp["field"]=key
     col=col.concat(temp)
   }
-  // console.log(col)
+  for (const i in data){
+    obj ={}
+    for (const [key,value] of Object.entries(data[i])){
+      // console.log(key,value)
+      if (typeof(value)!="string"){
+        obj[key]=value
+        continue
+      }
+      if (value.length>=stringMax){
+        var tempD=value.substring(0,stringMax)
+        obj[key]=<ModalPage trunData={tempD} fullData={value} />
+
+      }
+      else{
+        obj[key]=value
+      }
+    }
+    // console.log(obj)
+    genData=genData.concat(obj)
+  }
+  console.log(data,genData)
   const [datatable] = React.useState({
     columns:col,
-    rows: data
+    rows: genData
   });
 
   
@@ -86,4 +112,4 @@ export default function Pagination(props) {
   </Card.Body>
   </Card>;
 }
-//  tut +upload
+//  truncate +upload
